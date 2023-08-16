@@ -29,4 +29,14 @@ Em construção
 
 ## Test
 
-Em construção
+Para executar os testes utilize o comando
+
+```bash
+npm run test
+```
+
+### Testes disponíveis (Em progresso)
+
+Os testes disponíveis são:
+
+- Teste GET para pegar a aplicação na raíz. **Resultado esperado: statusCode 200.**
