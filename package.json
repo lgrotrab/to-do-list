@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
-    "dev": "node index.js",
+    "dev": "node server.js",
     "lint:check": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "test:watch": "node --experimental-vm-modules ./node_modules/.bin/jest --watch"
   },
   "keywords": [],
   "author": "",
