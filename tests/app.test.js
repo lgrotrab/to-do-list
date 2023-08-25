@@ -1,4 +1,4 @@
-import app from "../public/index.js";
+import app from "../public/app.js";
 import request from "supertest";
 
 describe("Test the root path", () => {
