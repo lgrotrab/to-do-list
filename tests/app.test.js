@@ -7,3 +7,10 @@ describe("Test the root path", () => {
     expect(res.statusCode).toBe(200);
   });
 });
+
+describe("Test the delete action", () => {
+  test("It should response with a 200 status code ", async () => {
+    const res = await request(app).post("/remove");
+    expect(res.statusCode).toBe(200);
+  });
+});

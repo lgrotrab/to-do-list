@@ -1,19 +1,33 @@
 <%- include("partials/header.ejs") %>
+  <form action="/" method="POST">
+    <div class="form-group">
+      <label for="newItem">Adicione um novo item</label>
+      <input type="text" class="form-control" id="newItem" placeholder="Comprar vegetais" name="add">
+      <button type="submit" class="btn btn-success" name="added" value="true">Add</button>
+    </div>
+
     <% if(locals.tasks) {
-        for(let i=0; i<tasks.length; i++) { %>
-          <div class="d-flex justify-content-center">
-            <div class="card mt-2 w-75 mx-5">
-              <div class="card-body align-items-center d-flex">
-                <div class="form-check flex-grow-1">
-                  <input class="form-check-input" type="checkbox">
-                  <label class="form-check-label px-2" >
-                    <%= tasks[i] %>
+      for(let i=0; i<tasks.length; i++) { %>
+        <div class="d-flex justify-content-center">
+          <div class="card mt-2 w-75 mx-5">
+            <div class="card-body align-items-center d-flex">
+              <div class="form-check flex-grow-1">
+                <% if(tasks[i].checked){ %>
+                  <input class="form-check-input" type="checkbox" value="<%=i%>" name="checkbox_position" checked>
+                  <label class="form-check-label px-2 checked" >
+                    <%= tasks[i].task %>
                   </label>
-                </div>
-               
-                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                <% }else{ %>
+                  <input class="form-check-input" type="checkbox" value="<%=i%>" name="checkbox_position">
+                  <label class="form-check-label px-2" >
+                    <%= tasks[i].task %>
+                  </label>
+                <% } %>
               </div>
+              <button type="submit" class="btn btn-danger" name="delete" value="<%=tasks[i].task%>"><i class="fa fa-trash" ></i></button>
             </div>
           </div>
-      <% } }%>
-<%- include("partials/footer.ejs") %>
+        </div>
+    <% } }%>
+  </form>
+<%- include("partials/footer.ejs", {tasks: tasks}) %>
