@@ -6,7 +6,15 @@
 To do list é um projeto do curso The Complete 2023 Web Development Bootcamp, a ideia é construir uma lista de afazeres utilizando como tecnologias node, express e ejs.
 O projeto irá contar com uma api simples que irá ser responsável por renderizar os arquivos ejs para mostrar atividades, os dados não serão salvos em um banco de dados então só serão salvos em execução.
 
-## Installation
+## 💻 Pré-requisitos
+
+Para executar o projeto é necessário ter:
+
+* A versão de `NodeJS v20.4.0 ou superior`
+
+Outra alternativa é executar o projeto utilizando a ferramenta codespaces do github que já vem com o node pré instalado, então basta prosseguir para a instação
+
+## 🚀 Instalando
 
 Para a instalação do projeto é necessário ter instalado o node. A versão utilizada para a criação foi a v20.4.0.
 Use o package manager [npm](https://www.npmjs.com) para a instalação do to do list.
@@ -15,7 +23,7 @@ Use o package manager [npm](https://www.npmjs.com) para a instalação do to do 
 npm install
 ```
 
-## Usage
+## ☕ Usando
 
 Para execução do projeto execute o comando
 
@@ -23,11 +31,14 @@ Para execução do projeto execute o comando
 npm run dev
 ```
 
-## Portas disponíveis
+## 🚪 Portas disponíveis
 
-Em construção
+As portas disponíveis para o projeto são:
 
-## Test
+* `/` para lista de afazeres caseiros
+* `/trabalho` para lista de afazeres de trabalho
+
+## 🧪 Test
 
 Para executar os testes utilize o comando
 
@@ -35,8 +46,7 @@ Para executar os testes utilize o comando
 npm run test
 ```
 
-### Testes disponíveis (Em progresso)
-
-Os testes disponíveis são:
-
-- Teste GET para pegar a aplicação na raíz. **Resultado esperado: statusCode 200.**
+Para desenvolvimento e execução automática dos testes utilize
+```bash
+npm run test:watch
+```
