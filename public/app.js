@@ -29,33 +29,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  //checa se os valores estão marcados como finalizados, caso esteja ele marca todos como falso e depois marca como feito o que foi passado já que a pessoa tem opção de desmarcar uma atividade.
-  if (req.body.hasOwnProperty("checkbox_position")) {
-    for (let i = 0; i < tasksPessoal.length; i++) {
-      tasksPessoal[i].checked = false;
-    }
-    for (let i = 0; i < req.body.checkbox_position.length; i++) {
-      tasksPessoal[req.body.checkbox_position[i]].checked = true;
-    }
-  } else {
-    for (let i = 0; i < tasksPessoal.length; i++) {
-      tasksPessoal[i].checked = false;
-    }
-  }
-  //Checa se um arquivo está sendo adicionado
-  if (req.body.add !== "" && req.body.added) {
-    tasksPessoal.unshift({
-      task: req.body.add,
-      checked: false,
-    });
-  } //checa se um arquivo está sendo deletado.
-  else if (req.body.delete !== undefined) {
-    for (let i = 0; i < tasksPessoal.length; i++) {
-      if (tasksPessoal[i].task === req.body.delete) {
-        tasksPessoal.splice(i, 1);
-      }
-    }
-  }
+  tasksPessoal = checkCheckboxes(req.body, tasksPessoal);
+  tasksPessoal = filterAction(req.body, tasksPessoal);
   //redireciona para não ocorrer requests repetidos.
   if (req.body.route === "trabalho") {
     res.redirect("/trabalho");
@@ -73,34 +48,8 @@ app.get("/trabalho", (req, res) => {
 });
 
 app.post("/trabalho", (req, res) => {
-  //checa se os valores estão marcados como finalizados, caso esteja ele marca todos como falso e depois marca como feito o que foi passado já que a pessoa tem opção de desmarcar uma atividade.
-  if (req.body.hasOwnProperty("checkbox_position")) {
-    for (let i = 0; i < tasksTrabalho.length; i++) {
-      tasksTrabalho[i].checked = false;
-    }
-    for (let i = 0; i < req.body.checkbox_position.length; i++) {
-      tasksTrabalho[req.body.checkbox_position[i]].checked = true;
-    }
-  } else {
-    for (let i = 0; i < tasksTrabalho.length; i++) {
-      tasksTrabalho[i].checked = false;
-    }
-  }
-  //Checa se um arquivo está sendo adicionado
-  if (req.body.add !== "" && req.body.added) {
-    tasksTrabalho.unshift({
-      task: req.body.add,
-      checked: false,
-    });
-  } //checa se um arquivo está sendo deletado.
-  else if (req.body.delete !== undefined) {
-    for (let i = 0; i < tasksTrabalho.length; i++) {
-      if (tasksTrabalho[i].task === req.body.delete) {
-        tasksTrabalho.splice(i, 1);
-      }
-    }
-  }
-  //redireciona para não ocorrer requests repetidos.
+  tasksTrabalho = checkCheckboxes(req.body, tasksTrabalho);
+  tasksTrabalho = filterAction(req.body, tasksTrabalho);
   if (req.body.route === "pessoal") {
     res.redirect("/");
   } else {
@@ -108,4 +57,64 @@ app.post("/trabalho", (req, res) => {
   }
 });
 
-export default app;
+/*checa se os valores estão marcados como finalizados, 
+caso esteja ele marca todos como falso e depois marca como feito 
+o que foi passado já que a pessoa tem opção de desmarcar uma atividade.*/
+function checkCheckboxes(body, array) {
+  if (array.length === 0) {
+    return "Array vazio";
+  }
+  if (!Array.isArray(array)) {
+    return "Array inválido";
+  }
+  for (let i = 0; i < array.length; i++) {
+    if (!array[i].hasOwnProperty("task")) {
+      return "Objeto do array não apresenta chave task";
+    }
+    if (!array[i].hasOwnProperty("checked")) {
+      return "Objeto do array não apresenta chave checked";
+    }
+  }
+  if (body.hasOwnProperty("checkbox_position")) {
+    for (let i = 0; i < array.length; i++) {
+      array[i].checked = false;
+    }
+    for (let i = 0; i < body.checkbox_position.length; i++) {
+      array[body.checkbox_position[i]].checked = true;
+    }
+    return array;
+  } else {
+    for (let i = 0; i < array.length; i++) {
+      array[i].checked = false;
+    }
+    return array;
+  }
+}
+
+function filterAction(body, array) {
+  if (!Array.isArray(array)) {
+    return "Array inválido";
+  }
+  //Checa se um arquivo está sendo adicionado
+  if (body.hasOwnProperty("add") && body.hasOwnProperty("added")) {
+    if (body.add !== "" && body.added) {
+      array.unshift({
+        task: body.add,
+        checked: false,
+      });
+      return array;
+    }
+  }
+  //checa se um arquivo está sendo deletado.
+  else if (body.delete !== undefined) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].task === body.delete) {
+        array.splice(i, 1);
+      }
+    }
+    return array;
+  }
+  return array;
+}
+
+export { app as default, filterAction, checkCheckboxes };
